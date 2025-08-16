@@ -1,0 +1,17 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+        "baseUrl": ".",
+		"lib": ["es2022", "DOM", "DOM.Iterable"],
+		"importsNotUsedAsValues": "error",
+		"isolatedModules": true,
+		"preserveValueImports": true,
+		"paths": {
+			"$lib": ["./src/lib"],
+			"$lib/*": ["./src/lib/*"]
+		},
+        "rootDirs": [".", "./.svelte-kit/types"]
+	},
+	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte", "vite.config.js", "svelte.config.js"],
+    "exclude": ["node_modules", ".svelte-kit"]
+}

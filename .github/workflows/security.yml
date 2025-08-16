@@ -1,0 +1,28 @@
+# Placeholder for dedicated or scheduled security scans.
+# This could include more in-depth scans that are too slow for the main CI pipeline.
+name: Security
+
+on:
+  schedule:
+    # Run weekly on Sunday at midnight
+    - cron: '0 0 * * 0'
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  sast-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Example using CodeQL for Static Application Security Testing (SAST)
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: python, javascript
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3

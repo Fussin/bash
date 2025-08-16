@@ -1,0 +1,54 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v3
+
+      - name: Install Dependencies
+        run: |
+          pip install poetry task
+          task bootstrap
+
+      - name: Lint & Format Check
+        run: task lint
+
+      - name: Run Tests
+        run: |
+          # This will run tests in all services that have them
+          poetry run pytest services/
+
+  security-scan:
+    runs-on: ubuntu-latest
+    needs: lint-and-test
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy filesystem scan for vulnerabilities
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: 'HIGH,CRITICAL'
+
+      - name: Run Gitleaks to detect secrets
+        run: |
+          # The pre-commit hook is for local dev, this is the CI enforcement
+          # Using the official gitleaks action is also a good option
+          go install github.com/gitleaks/gitleaks/v8@latest
+          gitleaks detect --source . --verbose --redact --exit-code 1

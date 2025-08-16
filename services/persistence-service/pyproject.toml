@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "persistence-service"
+version = "0.1.0"
+description = "The Persistence Service for Project Chimera."
+authors = ["Jules <jules@example.com>"]
+readme = "README.md"
+packages = [{include = "persistence_service", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.111.0"
+uvicorn = {extras = ["standard"], version = "^0.29.0"}
+psycopg2-binary = "^2.9.9" # For PostgreSQL
+pymongo = "^4.7.2"         # For MongoDB
+sqlalchemy = "^2.0.30"     # ORM for PostgreSQL
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,35 @@
+openapi: 3.0.3
+info:
+  title: "Project Chimera API"
+  version: "1.0.0"
+  description: "The primary API for interacting with Project Chimera, used by the TUI and Web Dashboard."
+paths:
+  /scans:
+    post:
+      summary: "Initiate a new security scan"
+      operationId: initiate_scan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target: { type: string, description: "The primary target for the scan (e.g., a domain, IP, or CIDR block)." }
+                policy: { type: string, enum: ["Bounty", "Red Team"], description: "The scanning policy to use." }
+              required:
+                - target
+                - policy
+      responses:
+        '202':
+          description: "Scan accepted and initiated"
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ScanStatus' }
+components:
+  schemas:
+    ScanStatus:
+      type: object
+      properties:
+        scanId: { type: string, format: "uuid" }
+        status: { type: string, enum: ["PENDING", "DISCOVERING_ASSETS", "COMPLETED"] }

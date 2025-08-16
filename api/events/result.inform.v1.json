@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ResultInform",
+  "description": "A placeholder schema for a worker agent to inform the orchestrator of a result. This should be defined further.",
+  "type": "object",
+  "properties": {
+    "performative": { "type": "string", "const": "INFORM" },
+    "sender_agent_id": { "type": "string", "format": "uuid" },
+    "conversation_id": { "type": "string", "format": "uuid" },
+    "content": {
+      "type": "object",
+      "properties": {
+        "status": { "type": "string", "enum": ["SUCCESS", "FAILURE"] },
+        "data": { "type": "object" }
+      }
+    },
+    "ontology": { "type": "string", "const": "chimera-security-ontology-v1" }
+  },
+  "required": ["performative", "sender_agent_id", "conversation_id", "content", "ontology"]
+}

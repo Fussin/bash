@@ -1,0 +1,41 @@
+# Placeholder for the Release pipeline.
+# This workflow will be responsible for:
+# - Building and tagging container images
+# - Pushing images to a container registry (e.g., GHCR, Docker Hub)
+# - Creating GitHub releases
+# - Potentially deploying to a staging environment
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Add steps here to build and push each service's Docker image
+      - name: Build and Push API Gateway
+        run: echo "Building and pushing API Gateway..."
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: "Release notes to be added here."
+          draft: false
+          prerelease: false

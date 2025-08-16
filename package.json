@@ -1,0 +1,13 @@
+{
+  "name": "project-chimera-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Project Chimera Monorepo",
+  "scripts": {
+    "format": "prettier --write \"**/*.{ts,js,svelte,json,md}\"",
+    "lint": "prettier --check \"**/*.{ts,js,svelte,json,md}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
+}

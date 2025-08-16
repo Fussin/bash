@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "project-chimera"
+version = "0.1.0"
+description = "Project Chimera Monorepo"
+authors = ["Jules <<<Jules@example.com>>>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+ruff = "^0.4.4"
+black = "^24.4.2"
+
+[tool.ruff]
+# Enable Pyflakes `F` and a subset of the pycodestyle `E` and `W` rules.
+# As well as isort `I`
+select = ["E", "F", "W", "I"]
+line-length = 88
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.0"

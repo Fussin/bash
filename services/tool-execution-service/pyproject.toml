@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "tool-execution-service"
+version = "0.1.0"
+description = "The Tool Execution Service for Project Chimera."
+authors = ["Jules <jules@example.com>"]
+readme = "README.md"
+packages = [{include = "tool_execution_service", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.111.0"
+uvicorn = {extras = ["standard"], version = "^0.29.0"}
+# Add other dependencies like kafka-python here
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

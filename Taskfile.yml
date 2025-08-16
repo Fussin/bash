@@ -1,0 +1,30 @@
+version: '3'
+tasks:
+  bootstrap:
+    desc: "Install all project dependencies and pre-commit hooks"
+    cmds:
+      - poetry install
+      - pnpm install
+      - pre-commit install
+  format:
+    desc: "Format all Python and TypeScript code"
+    cmds:
+      - pnpm format
+      - poetry run ruff format .
+  lint:
+    desc: "Lint all code"
+    cmds:
+      - pnpm lint
+      - poetry run ruff check .
+  build:
+    desc: "Build all container images for the local environment"
+    cmds:
+      - docker compose -f deployments/local/docker-compose.yml build
+  up:
+    desc: "Start the local development stack"
+    cmds:
+      - docker compose -f deployments/local/docker-compose.yml up -d
+  down:
+    desc: "Stop and remove the local development stack"
+    cmds:
+      - docker compose -f deployments/local/docker-compose.yml down -v --remove-orphans

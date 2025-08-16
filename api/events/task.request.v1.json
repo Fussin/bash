@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TaskRequest",
+  "description": "A task dispatched by the ScanOrchestrator to a WorkerAgent",
+  "type": "object",
+  "properties": {
+    "performative": { "type": "string", "const": "REQUEST" },
+    "sender_agent_id": { "type": "string", "format": "uuid" },
+    "receiver_agent_type": { "type": "string", "enum": ["AssetDiscoveryAgent", "NetworkAnalysisAgent", "WebAppAnalysisAgent"] },
+    "conversation_id": { "type": "string", "format": "uuid" },
+    "content": { "type": "object" },
+    "ontology": { "type": "string", "const": "chimera-security-ontology-v1" }
+  },
+  "required": ["performative", "sender_agent_id", "receiver_agent_type", "conversation_id", "content", "ontology"]
+}
