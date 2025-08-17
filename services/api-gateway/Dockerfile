@@ -4,9 +4,9 @@
 FROM python:3.11-slim as builder
 WORKDIR /app
 RUN pip install poetry
-COPY pyproject.toml poetry.lock* ./
-# Install dependencies, excluding dev ones
-RUN poetry install --no-dev --no-interaction --no-ansi
+COPY services/api-gateway/pyproject.toml services/api-gateway/poetry.lock* ./
+# Install dependencies
+RUN poetry install --no-root --no-interaction --no-ansi
 
 # 2. Final stage: Create the runtime image
 FROM python:3.11-slim
@@ -16,7 +16,7 @@ WORKDIR /app
 COPY --from=builder /app /app
 
 # Copy the application source code
-COPY src/ ./src/
+COPY services/api-gateway/src/ ./src/
 
 # Create a non-root user for security
 RUN useradd --create-home appuser
